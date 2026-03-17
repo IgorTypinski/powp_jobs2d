@@ -23,7 +23,7 @@ public class LineDrawerAdapter implements Job2dDriver {
     public void operateTo(int x, int y) {
         line.setStartCoordinates(currentX, currentY);
         line.setEndCoordinates(x, y);
-        controller.drawLine(line);  // funkcjonalność Drawer
+        controller.drawLine(line);
         this.currentX = x;
         this.currentY = y;
     }

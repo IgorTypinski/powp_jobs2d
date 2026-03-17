@@ -1,6 +1,6 @@
 package edu.kis.powp.jobs2d;
 
-import java.awt.EventQueue;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -15,6 +15,7 @@ import edu.kis.powp.jobs2d.events.SelectChangeVisibleOptionListener;
 import edu.kis.powp.jobs2d.events.SelectTestFigureOptionListener;
 import edu.kis.powp.jobs2d.features.DrawerFeature;
 import edu.kis.powp.jobs2d.features.DriverFeature;
+import edu.kis.powp.jobs2d.line.AdjustableLine;
 import edu.kis.powp.jobs2d.magicpresets.FiguresJoe;
 
 public class TestJobs2dPatterns {
@@ -107,6 +108,40 @@ public class TestJobs2dPatterns {
         );
     }
 
+    private static AdjustableLine adjustableLine = new AdjustableLine();
+
+    private static void setupAdjustableLine(Application application) {
+        application.addComponentMenu(AdjustableLine.class, "Adjustable Line", 0);
+
+        DriverFeature.addDriver("Adjustable Line",
+                new LineDrawerAdapter(
+                        DrawerFeature.getDrawerController(),
+                        adjustableLine
+                )
+        );
+
+        application.addComponentMenuElement(AdjustableLine.class, "Color - Black",
+                (ActionEvent e) -> adjustableLine.setColor(Color.BLACK));
+        application.addComponentMenuElement(AdjustableLine.class, "Color - Red",
+                (ActionEvent e) -> adjustableLine.setColor(Color.RED));
+        application.addComponentMenuElement(AdjustableLine.class, "Color - Blue",
+                (ActionEvent e) -> adjustableLine.setColor(Color.BLUE));
+        application.addComponentMenuElement(AdjustableLine.class, "Color - Green",
+                (ActionEvent e) -> adjustableLine.setColor(Color.GREEN));
+
+        application.addComponentMenuElement(AdjustableLine.class, "Thickness - Thin",
+                (ActionEvent e) -> adjustableLine.setThickness(1.0f));
+        application.addComponentMenuElement(AdjustableLine.class, "Thickness - Medium",
+                (ActionEvent e) -> adjustableLine.setThickness(3.0f));
+        application.addComponentMenuElement(AdjustableLine.class, "Thickness - Thick",
+                (ActionEvent e) -> adjustableLine.setThickness(6.0f));
+
+        application.addComponentMenuElement(AdjustableLine.class, "Dotted - On",
+                (ActionEvent e) -> adjustableLine.setDotted(true));
+        application.addComponentMenuElement(AdjustableLine.class, "Dotted - Off",
+                (ActionEvent e) -> adjustableLine.setDotted(false));
+    }
+
 	/**
 	 * Launch the application.
 	 */
@@ -115,14 +150,14 @@ public class TestJobs2dPatterns {
 			public void run() {
 				Application app = new Application("2d jobs Visio");
 				DrawerFeature.setupDrawerPlugin(app);
-
 				DriverFeature.setupDriverPlugin(app);
 				setupDrivers(app);
 				setupPresetTests(app);
 				setupLogger(app);
                 setupLine(app);
+                setupAdjustableLine(app);
 
-				app.setVisibility(true);
+                app.setVisibility(true);
 			}
 		});
 	}
