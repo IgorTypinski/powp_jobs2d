@@ -9,6 +9,9 @@ import edu.kis.legacy.drawer.panel.DefaultDrawerFrame;
 import edu.kis.legacy.drawer.panel.DrawPanelController;
 import edu.kis.legacy.drawer.shape.LineFactory;
 import edu.kis.powp.appbase.Application;
+import edu.kis.powp.jobs2d.commands.DriverCommand;
+import edu.kis.powp.jobs2d.commands.OperateToCommand;
+import edu.kis.powp.jobs2d.commands.SetPositionCommand;
 import edu.kis.powp.jobs2d.drivers.adapter.DriverAdapter;
 import edu.kis.powp.jobs2d.drivers.adapter.FiguresJaneAdapter;
 import edu.kis.powp.jobs2d.drivers.adapter.LineDrawerAdapter;
@@ -36,9 +39,27 @@ public class TestJobs2dPatterns {
             FiguresJoe.figureScript1(DriverFeature.getDriverManager().getCurrentDriver());
         });
 
+
+
         application.addTest("Figure Joe 2", (ActionEvent e) -> {
             FiguresJoe.figureScript2(DriverFeature.getDriverManager().getCurrentDriver());
         });
+
+		application.addTest("Command Test", (ActionEvent e) -> {
+			Job2dDriver driver = DriverFeature.getDriverManager().getCurrentDriver();
+
+			DriverCommand start = new SetPositionCommand(-10, -10, driver);
+			DriverCommand line1 = new OperateToCommand(10, -10, driver);
+			DriverCommand line2 = new OperateToCommand(10, 10, driver);
+			DriverCommand line3 = new OperateToCommand(-10, 10, driver);
+			DriverCommand line4 = new OperateToCommand(-10, -10, driver);
+
+			start.exectue();
+			line1.exectue();
+			line2.exectue();
+			line3.exectue();
+			line4.exectue();
+		});
 	}
 
 	/**
